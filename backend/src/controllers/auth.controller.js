@@ -26,7 +26,21 @@ const login = async (req,res,next) => {
   }
 }
 
+const getMe = async (req, res, next) =>{
+  try{
+    const user = await authService.getMe(req.user_id);
+
+    res.status(200).json({
+      success:true,
+      data:user 
+    })
+  }catch(error){
+    next(error);
+  }
+}
+
 module.exports = {
   signup,
   login,
+  getMe,
 }
