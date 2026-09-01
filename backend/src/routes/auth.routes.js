@@ -7,12 +7,6 @@ const router = express.Router();
 router.post("/signup", authController.signup);
 router.post("/login",authController.login)
 
-router.get("/protected",authMiddleware, (req,res) => {
-  res.status(200).json({
-    success: true,
-    message: "You are authenticated",
-    user_id: req.user_id,
-  })
-})
+router.get("/me",authMiddleware, authController.getMe);
 
 module.exports = router;

@@ -80,7 +80,26 @@ const login = async ({email, password}) => {
   }
 }
 
+const getMe = async(user_id) => {
+  const user = await User.findById(user_id);
+
+  if(!user){
+    const error = new Error("User not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  return {
+    id: user._id,
+    name:user.name,
+    email:user.email,
+    photoUrl: user.profileImage,
+    language: "en",
+  }
+}
+
 module.exports = {
   signup,
   login,
+  getMe,
 }
