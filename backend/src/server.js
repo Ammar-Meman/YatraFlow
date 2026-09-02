@@ -4,6 +4,8 @@ const cors = require("cors")
 const connectDB = require("./config/db")
 const authRoutes = require("./routes/auth.routes")
 const tripRoutes = require("./routes/trip.routes")
+const stopRoutes = require("./routes/stop.routes")
+const activityRoutes = require("./routes/activity.routes")
 
 dotenv.config();
 
@@ -16,6 +18,8 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes)
 app.use("/api/trips", tripRoutes);
+app.use("/api/stops", stopRoutes);
+app.use("/api/activities", activityRoutes);
 
 app.get("/api/health", (req,res)=>{
   res.status(200).json({
