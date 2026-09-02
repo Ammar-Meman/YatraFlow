@@ -164,6 +164,91 @@ async function reorderStop(req, res, next){
     }
 }
 
+async function addActivity(req, res, next){
+
+    try{
+        const trip = await tripService.addActivity(
+            req.user_id,
+            req.params.stopId,
+            req.body
+        );
+
+        res.status(201).json({
+            success: true,
+            data: trip,
+        });
+    }catch(error){
+        next(error);
+    }
+}
+
+async function getActivities(req, res, next){
+
+    try{
+        const activities = await tripService.getActivities(
+            req.user_id,
+            req.params.stopId
+        )
+
+        res.status(200).json({
+            success: true,
+            data: activities,
+        })
+    }catch(error){
+        next(error);
+    }
+}
+
+async function updateActivity(req, res, next){
+    try{
+        const activity = await tripService.updateActivity(
+            req.user_id,
+            req.params.activityId,
+            req.body
+        );
+
+        res.status(200).json({
+            success: true,
+            data: activity,
+        })
+    }catch(error){
+        next(error);
+    }
+}
+
+async function deleteActivity(req, res, next){
+    try{
+        const activity = await tripService(
+            req.user_id,
+            req.params.activityId
+        );
+
+        res.status(200).json({
+            success: true,
+            data: activity,
+        })
+    }catch(error){
+        next(error)
+    }
+}
+
+async function reorderActivities(req, res, next){
+   try{
+     const activities = await tripService.reorderActivities(
+        req.user_id,
+        req.params.stopId,
+        req.body
+    )
+
+    res.status(200).json({
+        success: true,
+        data: activities,
+    });
+   }catch(error){
+    next(error);
+   }
+}
+
 module.exports = {
     createTrip,
     getTrips,
@@ -174,5 +259,10 @@ module.exports = {
     getStops,
     updateStop,
     deleteStop,
-    reorderStop
+    reorderStop,
+    addActivity,
+    getActivities,
+    updateActivity,
+    deleteActivity,
+    reorderActivities
 }
