@@ -6,6 +6,7 @@ const authRoutes = require("./routes/auth.routes")
 const tripRoutes = require("./routes/trip.routes")
 const stopRoutes = require("./routes/stop.routes")
 const activityRoutes = require("./routes/activity.routes")
+const expenseRoutes = require("./routes/expense.route");
 
 dotenv.config();
 
@@ -16,10 +17,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/auth", authRoutes)
+app.use("/api/auth", authRoutes);
 app.use("/api/trips", tripRoutes);
 app.use("/api/stops", stopRoutes);
 app.use("/api/activities", activityRoutes);
+app.use("/api/expenses",expenseRoutes);
 
 app.get("/api/health", (req,res)=>{
   res.status(200).json({

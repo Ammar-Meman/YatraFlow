@@ -12,8 +12,11 @@ router.patch("/:tripId",authMiddleware, tripController.updateTrip);
 router.delete("/:tripId",authMiddleware, tripController.deleteTrip);
 
 router.post("/:tripId/stops",authMiddleware, tripController.addStop);
-router.get("/:tripId/stops",authMiddleware,tripController.getStops)
-router.patch("/:tripId/stops/reorder", authMiddleware, tripController.reorderStop)
+router.get("/:tripId/stops",authMiddleware,tripController.getStops);
+router.patch("/:tripId/stops/reorder", authMiddleware, tripController.reorderStop);
+
+router.post("/:tripId/expenses",authMiddleware, expenseController.createExpense);
+router.get("/:tripId/expenses",authMiddleware,expenseController.getExpenses)
 
 
 module.exports = router;
