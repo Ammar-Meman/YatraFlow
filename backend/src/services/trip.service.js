@@ -173,6 +173,142 @@ async function reorderStop(userId, tripId, stopsData){
     return trip.stops;
 }
 
+async function addActivity(userId, stopId, activityData){
+    
+    const trip = await Trip.findOne({
+        userId,
+        "stops._id": stopId
+    });
+
+    if(!trip){
+        const error = new Error("Trip not found");
+        error.statusCode = 404;
+        throw error;
+    }
+
+    const stop = trip.stops.id(stopId);
+
+    if(!stop){
+        const error = new Error("Stop not found");
+        error.statusCode = 404;
+        throw error;
+    }
+
+    stop.activities.push(activityData);
+
+    await trip.save();
+
+    return trip;
+}
+
+async function getActivities(userId, stopId){
+
+    const trip = await Trip.findOne({
+        userId,
+        "stops._id": stopId,
+    });
+
+    if(!trip){
+        const error = new Error("Trip not found");
+        error.statusCode = 404;
+        throw error;
+    }
+
+    const stop = trip.stops.id(stopId);
+
+    if(!stop){
+        const error = new Error("Stop not found");
+        error.statusCode = 404;
+        throw error;
+    }
+
+    return stop.activities;
+}
+
+async function updateActivity(userId, activityId, activityData){
+
+    const trip = await Trip.findOne({
+        userId,
+        "stops.activities._id": activityId,
+    });
+
+    if(!trip){
+        const error = new Error("Activity not found");
+        error.statusCode = 404;
+        throw error;
+    }
+
+    // Find the stop that contains this activity
+    const stop = trip.stops.find((stop)=>
+        stop.activities.id(activityId)
+    )
+
+     // Find the specific activity inside that stop
+    const activity = stop.activities.id(activityId);
+
+    // Update only the fields provided in the request body
+    Object.assign(activity, activityData);
+
+    // Save the trip containing the updated activity
+    await trip.save();
+
+    return activity;
+}
+
+async function deleteActivity(userId, activityId){
+
+    const trip = await Trip.findOne({
+        userId,
+        "stops.activities._id":activityId,
+    });
+
+    if(!trip){
+        const error = new Error("Activity not found")
+        error.statusCode = 404;
+        throw error;
+    }
+
+    const stop = trip.stops.find((stop)=>
+        stop.activities.id(activityId)
+    )
+
+    const activity = stop.activities.id(activityId);
+
+    activity.deleteOne();
+
+    await trip.save();
+
+    return trip;
+}
+
+async function reorderActivities(userId, stopId, activitiesData){
+    const trip = await Trip.findOne({
+        userId,
+        "stops._id": stopId,
+    });
+
+    if(!trip){
+        const error = new Error("Stop not found");
+        error.statusCode = 404;
+        throw error;
+    }
+
+    const stop = trip.stops.id(stopId);
+
+    activitiesData.forEach((item)=>{
+        const activity = stop.activities.id(item.activityId);
+
+        if(activity){
+            activity.order = item.order;
+        }
+    });
+
+    await trip.save();
+
+    return stop.activities;
+
+}
+
 module.exports = {
     createTrip,
     getTrips,
@@ -184,4 +320,9 @@ module.exports = {
     updateStop,
     deleteStop,
     reorderStop,
+    addActivity,
+    getActivities,
+    updateActivity,
+    deleteActivity,
+    reorderActivities
 }
