@@ -10,6 +10,11 @@ const activitySchema = new mongoose.Schema({
         type:String,
     },
 
+    placeId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Place",
+    },
+
     location:{
         type:{
             type: String,
@@ -39,6 +44,22 @@ const activitySchema = new mongoose.Schema({
 
     closingTime:{
         type:String,
+    },
+
+    hoursSource: {
+        type: String,
+        enum: ["auto", "manual", "unknown"],
+        default: "unknown",
+    },
+
+    status: {
+        type: String,
+        enum: ["planned", "completed", "skipped", "cancelled"],
+        default: "planned",
+    },
+
+    placeIssue: {
+        type: String,
     },
 
     order:{
