@@ -1,6 +1,7 @@
 const express = require("express");
 const tripController = require("../controllers/trip.controller")
 const authMiddleware = require("../middleware/auth.middleware")
+const expenseController = require("../controllers/expense.controller")
 
 const router = express.Router();
 
@@ -17,6 +18,7 @@ router.patch("/:tripId/stops/reorder", authMiddleware, tripController.reorderSto
 
 router.post("/:tripId/expenses",authMiddleware, expenseController.createExpense);
 router.get("/:tripId/expenses",authMiddleware,expenseController.getExpenses)
+router.get("/:tripId/budget",authMiddleware,expenseController.getBudget)
 
 
 module.exports = router;

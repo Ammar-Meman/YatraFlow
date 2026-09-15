@@ -99,8 +99,7 @@ async function getStops(req, res, next){
     try{
         const stops = await tripService.getStops(
             req.user_id,
-            req.params.tripId,
-            req.body
+            req.params.tripId
         );
 
         res.status(200).json({
@@ -218,7 +217,7 @@ async function updateActivity(req, res, next){
 
 async function deleteActivity(req, res, next){
     try{
-        const activity = await tripService(
+        const activity = await tripService.deleteActivity(
             req.user_id,
             req.params.activityId
         );
