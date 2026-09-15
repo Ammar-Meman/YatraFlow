@@ -118,7 +118,7 @@ const deleteExpense = async(userId, expenseId) => {
 
   if(!trip){
     const error = new Error("Trip not found");
-    error.statusCode = 404;4
+    error.statusCode = 404;
     throw error;
   }
 
