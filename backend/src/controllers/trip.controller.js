@@ -218,7 +218,7 @@ async function updateActivity(req, res, next){
 
 async function deleteActivity(req, res, next){
     try{
-        const activity = await tripService(
+        const activity = await tripService.deleteActivity(
             req.user_id,
             req.params.activityId
         );

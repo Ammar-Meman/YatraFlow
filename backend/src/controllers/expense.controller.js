@@ -44,7 +44,7 @@ async function getBudget(req, res, next){
 
     res.status(200).json({
       success:true,
-      data:expense
+      data: budget
     })
   }catch(error){
     next(error)
