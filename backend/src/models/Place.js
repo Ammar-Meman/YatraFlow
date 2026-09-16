@@ -62,7 +62,12 @@ const placeSchema = new mongoose.Schema(
       type: String,
     },
 
-    reportedIncorrectCount:{
+    reportedIncorrectCount: {
+      type: Number,
+      default: 0,
+    },
+
+    needsReverification: {
       type: Boolean,
       default: false,
     },

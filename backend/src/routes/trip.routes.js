@@ -1,24 +1,23 @@
 const express = require("express");
-const tripController = require("../controllers/trip.controller")
-const authMiddleware = require("../middleware/auth.middleware")
-const expenseController = require("../controllers/expense.controller")
+const tripController = require("../controllers/trip.controller");
+const expenseController = require("../controllers/expense.controller");
+const authMiddleware = require("../middleware/auth.middleware");
 
 const router = express.Router();
 
-router.post("/",authMiddleware, tripController.createTrip);
-router.get("/",authMiddleware, tripController.getTrips)
+router.post("/", authMiddleware, tripController.createTrip);
+router.get("/", authMiddleware, tripController.getTrips);
 
-router.get("/:tripId",authMiddleware, tripController.getTripById)
-router.patch("/:tripId",authMiddleware, tripController.updateTrip);
-router.delete("/:tripId",authMiddleware, tripController.deleteTrip);
+router.get("/:tripId", authMiddleware, tripController.getTripById);
+router.patch("/:tripId", authMiddleware, tripController.updateTrip);
+router.delete("/:tripId", authMiddleware, tripController.deleteTrip);
 
-router.post("/:tripId/stops",authMiddleware, tripController.addStop);
-router.get("/:tripId/stops",authMiddleware,tripController.getStops);
+router.post("/:tripId/stops", authMiddleware, tripController.addStop);
+router.get("/:tripId/stops", authMiddleware, tripController.getStops);
 router.patch("/:tripId/stops/reorder", authMiddleware, tripController.reorderStop);
 
-router.post("/:tripId/expenses",authMiddleware, expenseController.createExpense);
-router.get("/:tripId/expenses",authMiddleware,expenseController.getExpenses)
-router.get("/:tripId/budget",authMiddleware,expenseController.getBudget)
-
+router.post("/:tripId/expenses", authMiddleware, expenseController.createExpense);
+router.get("/:tripId/expenses", authMiddleware, expenseController.getExpenses);
+router.get("/:tripId/budget", authMiddleware, expenseController.getBudget);
 
 module.exports = router;

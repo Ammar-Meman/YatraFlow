@@ -13,6 +13,10 @@ const getPlaceById = async (placeId) =>{
         throw new Error("Place not found");
     }
 
+    if (!isPlaceFresh(place)) {
+        refreshPlace(placeId).catch((err) => console.error("Lazy revalidation failed:", err.message));
+    }
+
     return place;
 };
 
@@ -66,7 +70,7 @@ const searchPlaces = async (query, near) => {
     const savedPlaces = [];
 
     for(const place of places){
-        const existingPlace = await Place.find({
+        const existingPlace = await Place.findOne({
             externalPlaceId: place.externalPlaceId,
         });
 
@@ -137,6 +141,9 @@ const refreshPlace = async (placeId) => {
     place.address = mappedPlace.address;
     place.category = mappedPlace.category;
     place.location = mappedPlace.location;
+    place.openingHours = mappedPlace.openingHours;
+    place.lastVerifiedAt = new Date();
+    place.needsReverification = false;
 
     await place.save();
 
