@@ -99,8 +99,7 @@ async function getStops(req, res, next){
     try{
         const stops = await tripService.getStops(
             req.user_id,
-            req.params.tripId,
-            req.body
+            req.params.tripId
         );
 
         res.status(200).json({

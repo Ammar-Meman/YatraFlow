@@ -20,4 +20,4 @@ router.post("/:tripId/expenses", authMiddleware, expenseController.createExpense
 router.get("/:tripId/expenses", authMiddleware, expenseController.getExpenses);
 router.get("/:tripId/budget", authMiddleware, expenseController.getBudget);
 
-module.exports = router;
+module.exports = router;
